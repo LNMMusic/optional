@@ -303,7 +303,7 @@ func TestOption_None(t *testing.T) {
 	})
 }
 
-func TestOption_Unmarshall(t *testing.T) {
+func TestOption_Unmarshal(t *testing.T) {
 	// string
 	t.Run("JSON - string", func(t *testing.T) {
 		// arrange
@@ -670,52 +670,152 @@ func TestOption_Unmarshall(t *testing.T) {
 		assert.True(t, ts.Location.IsSome()); v7, err7 := ts.Location.Unwrap(); assert.NoError(t, err7); assert.Equal(t, []float64{1.0, 2.0, 3.0}, v7)
 		assert.True(t, ts.Bools.IsSome()); v8, err8 := ts.Bools.Unwrap(); assert.NoError(t, err8); assert.Equal(t, []bool{true, false}, v8)
 	})
-		
 }
 
-func TestOption_Marshall(t *testing.T) {
-	t.Run("JSON - string", func(t *testing.T) {
-		// arrange
-		option := Some("hello")
+func TestOption_Marshal(t *testing.T) {
+	type input struct {value any}
+	type output struct {data []byte; err error}
+	type testCase struct {
+		title  string
+		input  input
+		output output
+	}
 
-		// act
-		data, err := json.Marshal(option)
+	cases := []testCase{
+		// string
+		{
+			title: "JSON - string",
+			input: input{value: Some("hello")},
+			output: output{data: []byte(`"hello"`), err: nil},
+		},
+		{
+			title: "JSON - string null",
+			input: input{value: None[string]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-		// assert
-		assert.NoError(t, err)
-		assert.Equal(t, []byte(`"hello"`), data)
-	})
+		// int
+		{
+			title: "JSON - int",
+			input: input{value: Some(1)},
+			output: output{data: []byte(`1`), err: nil},
+		},
+		{
+			title: "JSON - int null",
+			input: input{value: None[int]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-	t.Run("JSON - string null", func(t *testing.T) {
-		// arrange
-		option := None[string]()
+		// float64
+		{
+			title: "JSON - float64",
+			input: input{value: Some(1.0)},
+			output: output{data: []byte(`1`), err: nil},
+		},
+		{
+			title: "JSON - float64 null",
+			input: input{value: None[float64]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-		// act
-		data, err := json.Marshal(option)
+		// bool
+		{
+			title: "JSON - bool",
+			input: input{value: Some(true)},
+			output: output{data: []byte(`true`), err: nil},
+		},
+		{
+			title: "JSON - bool null",
+			input: input{value: None[bool]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-		// assert
-		assert.NoError(t, err)
-		assert.Equal(t, []byte(`null`), data)
-	})
+		// []string
+		{
+			title: "JSON - []string",
+			input: input{value: Some([]string{"hello", "world"})},
+			output: output{data: []byte(`["hello","world"]`), err: nil},
+		},
+		{
+			title: "JSON - []string null",
+			input: input{value: None[[]string]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-	t.Run("JSON - structered data", func(t *testing.T) {
-		// arrange
-		type testStruct struct {
-			FirstName 	Option[string]
-			LastName  	Option[string]
-			Description Option[string]
-		}
-		ts := testStruct{
-			FirstName: Some("Mary"),
-			LastName:  Some("Jane"),
-			Description: None[string](),
-		}
+		// []int
+		{
+			title: "JSON - []int",
+			input: input{value: Some([]int{1, 2, 3})},
+			output: output{data: []byte(`[1,2,3]`), err: nil},
+		},
+		{
+			title: "JSON - []int null",
+			input: input{value: None[[]int]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-		// act
-		data, err := json.Marshal(ts)
+		// []float64
+		{
+			title: "JSON - []float64",
+			input: input{value: Some([]float64{1.0, 2.0, 3.0})},
+			output: output{data: []byte(`[1,2,3]`), err: nil},
+		},
+		{
+			title: "JSON - []float64 null",
+			input: input{value: None[[]float64]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
 
-		// assert
-		assert.NoError(t, err)
-		assert.Equal(t, []byte(`{"FirstName":"Mary","LastName":"Jane","Description":null}`), data)
-	})
+		// []bool
+		{
+			title: "JSON - []bool",
+			input: input{value: Some([]bool{true, false})},
+			output: output{data: []byte(`[true,false]`), err: nil},
+		},
+		{
+			title: "JSON - []bool null",
+			input: input{value: None[[]bool]()},
+			output: output{data: []byte(`null`), err: nil},
+		},
+
+		// structered data (all types)
+		{
+			title: "JSON - structered data",
+			input: input{value: struct {
+				FirstName 	Option[string]
+				Age 		Option[int]
+				Height 		Option[float64]
+				Licensed 	Option[bool]
+				Pets 		Option[[]string]
+				Numbers 	Option[[]int]
+				Location 	Option[[]float64]
+				Bools		Option[[]bool]
+			}{
+				FirstName: Some("Mary"),
+				Age: Some(20),
+				Height: Some(1.7),
+				Licensed: Some(true),
+				Pets: Some([]string{"dog", "cat"}),
+				Numbers: Some([]int{1, 2, 3}),
+				Location: Some([]float64{1.0, 2.0, 3.0}),
+				Bools: Some([]bool{true, false}),
+			}},
+			output: output{data: []byte(`{"FirstName":"Mary","Age":20,"Height":1.7,"Licensed":true,"Pets":["dog","cat"],"Numbers":[1,2,3],"Location":[1,2,3],"Bools":[true,false]}`), err: nil},
+		},
+	}
+
+	// run tests
+	for _, c := range cases {
+		t.Run(c.title, func(t *testing.T) {
+			// arrange
+			// ...
+
+			// act
+			data, err := json.Marshal(c.input.value)
+
+			// assert
+			assert.Equal(t, c.output.data, data)
+			assert.ErrorIs(t, err, c.output.err)
+		})
+	}
 }
