@@ -7,11 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestOption_Some tests the Some constructor.
 func TestOption_Some(t *testing.T) {
 	t.Run("Some - string", func(t *testing.T) {
 		// arrange
 		var input string = "hello"
-		var output = Option[string]{Value: &input}
+		var output = Option[string]{value: &input}
 
 		// act
 		result := Some(input)
@@ -27,7 +28,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - int", func(t *testing.T) {
 		// arrange
 		var input int = 1
-		var output = Option[int]{Value: &input}
+		var output = Option[int]{value: &input}
 
 		// act
 		result := Some(input)
@@ -43,7 +44,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - float64", func(t *testing.T) {
 		// arrange
 		var input float64 = 1.0
-		var output = Option[float64]{Value: &input}
+		var output = Option[float64]{value: &input}
 
 		// act
 		result := Some(input)
@@ -59,7 +60,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - bool", func(t *testing.T) {
 		// arrange
 		var input bool = true
-		var output = Option[bool]{Value: &input}
+		var output = Option[bool]{value: &input}
 
 		// act
 		result := Some(input)
@@ -75,7 +76,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - []string", func(t *testing.T) {
 		// arrange
 		var input []string = []string{"hello", "world"}
-		var output = Option[[]string]{Value: &input}
+		var output = Option[[]string]{value: &input}
 
 		// act
 		result := Some(input)
@@ -91,7 +92,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - []int", func(t *testing.T) {
 		// arrange
 		var input []int = []int{1, 2, 3}
-		var output = Option[[]int]{Value: &input}
+		var output = Option[[]int]{value: &input}
 
 		// act
 		result := Some(input)
@@ -107,7 +108,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - []float64", func(t *testing.T) {
 		// arrange
 		var input []float64 = []float64{1.0, 2.0, 3.0}
-		var output = Option[[]float64]{Value: &input}
+		var output = Option[[]float64]{value: &input}
 
 		// act
 		result := Some(input)
@@ -123,7 +124,7 @@ func TestOption_Some(t *testing.T) {
 	t.Run("Some - []bool", func(t *testing.T) {
 		// arrange
 		var input []bool = []bool{true, false}
-		var output = Option[[]bool]{Value: &input}
+		var output = Option[[]bool]{value: &input}
 
 		// act
 		result := Some(input)
@@ -142,7 +143,7 @@ func TestOption_Some(t *testing.T) {
 			value string
 		}
 		var input testStruct = testStruct{value: "hello"}
-		var output = Option[testStruct]{Value: &input}
+		var output = Option[testStruct]{value: &input}
 
 		// act
 		result := Some(input)
@@ -156,10 +157,11 @@ func TestOption_Some(t *testing.T) {
 	})
 }
 
+// TestOption_None tests the None constructor.
 func TestOption_None(t *testing.T) {
 	t.Run("None - string", func(t *testing.T) {
 		// arrange
-		var output = Option[string]{Value: nil}
+		var output = Option[string]{value: nil}
 
 		// act
 		result := None[string]()
@@ -175,7 +177,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - int", func(t *testing.T) {
 		// arrange
-		var output = Option[int]{Value: nil}
+		var output = Option[int]{value: nil}
 
 		// act
 		result := None[int]()
@@ -191,7 +193,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - float64", func(t *testing.T) {
 		// arrange
-		var output = Option[float64]{Value: nil}
+		var output = Option[float64]{value: nil}
 
 		// act
 		result := None[float64]()
@@ -207,7 +209,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - bool", func(t *testing.T) {
 		// arrange
-		var output = Option[bool]{Value: nil}
+		var output = Option[bool]{value: nil}
 
 		// act
 		result := None[bool]()
@@ -223,7 +225,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - []string", func(t *testing.T) {
 		// arrange
-		var output = Option[[]string]{Value: nil}
+		var output = Option[[]string]{value: nil}
 
 		// act
 		result := None[[]string]()
@@ -239,7 +241,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - []int", func(t *testing.T) {
 		// arrange
-		var output = Option[[]int]{Value: nil}
+		var output = Option[[]int]{value: nil}
 
 		// act
 		result := None[[]int]()
@@ -255,7 +257,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - []float64", func(t *testing.T) {
 		// arrange
-		var output = Option[[]float64]{Value: nil}
+		var output = Option[[]float64]{value: nil}
 
 		// act
 		result := None[[]float64]()
@@ -271,7 +273,7 @@ func TestOption_None(t *testing.T) {
 
 	t.Run("None - []bool", func(t *testing.T) {
 		// arrange
-		var output = Option[[]bool]{Value: nil}
+		var output = Option[[]bool]{value: nil}
 
 		// act
 		result := None[[]bool]()
@@ -288,7 +290,7 @@ func TestOption_None(t *testing.T) {
 	t.Run("None - struct", func(t *testing.T) {
 		// arrange
 		type testStruct struct {}
-		var output = Option[testStruct]{Value: nil}
+		var output = Option[testStruct]{value: nil}
 
 		// act
 		result := None[testStruct]()
@@ -303,12 +305,13 @@ func TestOption_None(t *testing.T) {
 	})
 }
 
+// TestOption_IsSome tests the IsSome method.
 func TestOption_Unmarshal(t *testing.T) {
 	// string
 	t.Run("JSON - string", func(t *testing.T) {
 		// arrange
 		data := []byte(`"hello"`)
-		option := Option[string]{Value: nil}
+		option := Option[string]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -341,7 +344,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - int", func(t *testing.T) {
 		// arrange
 		data := []byte(`1`)
-		option := Option[int]{Value: nil}
+		option := Option[int]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -374,7 +377,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - float64", func(t *testing.T) {
 		// arrange
 		data := []byte(`1.0`)
-		option := Option[float64]{Value: nil}
+		option := Option[float64]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -407,7 +410,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - bool", func(t *testing.T) {
 		// arrange
 		data := []byte(`true`)
-		option := Option[bool]{Value: nil}
+		option := Option[bool]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -440,7 +443,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - []string", func(t *testing.T) {
 		// arrange
 		data := []byte(`["hello","world"]`)
-		option := Option[[]string]{Value: nil}
+		option := Option[[]string]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -473,7 +476,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - []int", func(t *testing.T) {
 		// arrange
 		data := []byte(`[1,2,3]`)
-		option := Option[[]int]{Value: nil}
+		option := Option[[]int]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -506,7 +509,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - []float64", func(t *testing.T) {
 		// arrange
 		data := []byte(`[1.0,2.0,3.0]`)
-		option := Option[[]float64]{Value: nil}
+		option := Option[[]float64]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -539,7 +542,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	t.Run("JSON - []bool", func(t *testing.T) {
 		// arrange
 		data := []byte(`[true,false]`)
-		option := Option[[]bool]{Value: nil}
+		option := Option[[]bool]{value: nil}
 
 		// act
 		err := json.Unmarshal(data, &option)
@@ -672,6 +675,7 @@ func TestOption_Unmarshal(t *testing.T) {
 	})
 }
 
+// TestOption_IsNone tests the IsNone method.
 func TestOption_Marshal(t *testing.T) {
 	type input struct {value any}
 	type output struct {data []byte; err error}
