@@ -1,6 +1,6 @@
 # Optional
 
-The `optional` package is a Golang package that provides a type called `Option` for representing optional values. It allows you to handle scenarios where a value may or may not be present. This include compatibility with dynamic types such as maps and JSON where the existence of a key may not be guaranteed. In this case the `Option` type can be used to represent the existence of a key and its value.
+The `optional` package is a Golang package that provides a type called `Option` for representing optional values. It allows you to handle `scenarios` where a `value` `may or may not be present`. This include compatibility with dynamic types such as maps and JSON where the `existence of a key` may not be guaranteed. In this case the `Option` type can be used to represent the existence of a key and its value.
 
 ## Installation
 
@@ -138,6 +138,13 @@ if err != nil {
 The output of the above code is `42` due to encodes straight forward the inner value of the optional
 
 Please note that marshalling a `None` optional value will result in `null` in the JSON output.
+
+#### *Rules*
+- If json is `null`, the optional value will be `None`. This means that optional DOES NOT DISTINGUISH between the `absence of the key` and the `presence of the key with a null value`. All `null` values are treated as `non-existent-values`. To avoid this, later will be available a new type called `Nullable` that will be able to extend the values on go with the `null` value. This can be combined with the `optional` type to create a `NullableOptional` type that will be able to distinguish between the `absence of the key` and the `presence of the key with a null value`.
+
+```go
+var optionalNullable := optional.Some[Nullable[int]](Nullable[int]{Value: nil})
+```
 
 ## License
 
