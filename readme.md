@@ -1,6 +1,6 @@
 # Optional
 
-The `optional` package is a Golang package that provides a type called `Option` for representing optional values. It allows you to handle scenarios where a value may or may not be present.
+The `optional` package is a Golang package that provides a type called `Option` for representing optional values. It allows you to handle scenarios where a value may or may not be present. This include compatibility with dynamic types such as maps and JSON where the existence of a key may not be guaranteed. In this case the `Option` type can be used to represent the existence of a key and its value.
 
 ## Installation
 
@@ -28,7 +28,7 @@ The `Some` function creates an optional value with a non-nil inner value.
 
 ```go
 value := 42
-opt := optional.Some(value)
+opt := optional.Some[int](value)
 ```
 
 #### None
@@ -36,7 +36,7 @@ opt := optional.Some(value)
 The `None` function creates an optional value with a nil inner value.
 
 ```go
-opt := optional.None()
+opt := optional.None[int]()
 ```
 
 ### Checking if an Optional Value is Some
@@ -53,14 +53,14 @@ if opt.IsSome() {
 
 ### Unwrapping an Optional Value
 
-To retrieve the inner value of a `Some` optional value, you can use the `Unwrap` method. It returns the inner value and an error if the optional value is `None`.
+To retrieve the inner value of a `Some` optional value, you can use the `Unwrap` method. It returns the inner value. If the optional value is `None`, the function panics. You should handle this appropriately in your code.
 
 ```go
-value, err := opt.Unwrap()
-if err != nil {
-    // Handle the error
+if opt.IsSome() {
+	value := opt.Unwrap()
+	// Do something with the value
 } else {
-    // Use the inner value
+	// The optional value is None
 }
 ```
 
@@ -74,18 +74,14 @@ package main
 import (
 	"fmt"
 
-	"github.com/your-username/optional"
+	"github.com/LNMMusic/optional"
 )
 
 func main() {
-	opt := optional.Some(42)
+	opt := optional.Some[int](42)
 	if opt.IsSome() {
-		value, err := opt.Unwrap()
-		if err != nil {
-			fmt.Println("Error:", err)
-		} else {
-			fmt.Println("Value:", value)
-		}
+		value := opt.Unwrap()
+		fmt.Printf("The optional value is Some and its value is %d\n", value)
 	} else {
 		fmt.Println("The optional value is None")
 	}
@@ -94,7 +90,16 @@ func main() {
 
 ## Error Handling
 
-If you attempt to call the `Unwrap` method on a `None` optional value, it will return the `ErrUnwrapNone` error. You should handle this error appropriately in your code.
+If you attempt to call the `Unwrap` method on a `None` optional value, it will panic. You should handle this error appropriately in your code, by first checking if the optional value is `Some` or `None`.
+
+```go
+if opt.IsSome() {
+	value := opt.Unwrap()
+	// Do something with the value
+} else {
+	// The optional value is None
+}
+```
 
 ## JSON Marshalling and Unmarshalling
 

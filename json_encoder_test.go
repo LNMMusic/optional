@@ -21,9 +21,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, "hello", v)
+		require.Equal(t, "hello", option.Unwrap())
 	})
 	t.Run("JSON - string null", func(t *testing.T) {
 		// arrange
@@ -36,10 +34,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, "", v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// int
@@ -54,9 +48,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, 1, v)
+		require.Equal(t, 1, option.Unwrap())
 	})
 	t.Run("JSON - int null", func(t *testing.T) {
 		// arrange
@@ -69,10 +61,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, 0, v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// float64
@@ -87,9 +75,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, 1.0, v)
+		require.Equal(t, 1.0, option.Unwrap())
 	})
 	t.Run("JSON - float64 null", func(t *testing.T) {
 		// arrange
@@ -102,10 +88,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, 0.0, v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// bool
@@ -120,9 +102,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, true, v)
+		require.Equal(t, true, option.Unwrap())
 	})
 	t.Run("JSON - bool null", func(t *testing.T) {
 		// arrange
@@ -135,10 +115,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, false, v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// []string
@@ -153,9 +129,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, []string{"hello", "world"}, v)
+		require.Equal(t, []string{"hello", "world"}, option.Unwrap())
 	})
 	t.Run("JSON - []string null", func(t *testing.T) {
 		// arrange
@@ -168,10 +142,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, []string(nil), v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// []int
@@ -186,9 +156,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, []int{1, 2, 3}, v)
+		require.Equal(t, []int{1, 2, 3}, option.Unwrap())
 	})
 	t.Run("JSON - []int null", func(t *testing.T) {
 		// arrange
@@ -201,10 +169,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, []int(nil), v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// []float64
@@ -219,9 +183,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, []float64{1.0, 2.0, 3.0}, v)
+		require.Equal(t, []float64{1.0, 2.0, 3.0}, option.Unwrap())
 	})
 	t.Run("JSON - []float64 null", func(t *testing.T) {
 		// arrange
@@ -234,10 +196,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, []float64(nil), v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// []bool
@@ -252,9 +210,7 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.True(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.NoError(t, err)
-		require.Equal(t, []bool{true, false}, v)
+		require.Equal(t, []bool{true, false}, option.Unwrap())
 	})
 	t.Run("JSON - []bool null", func(t *testing.T) {
 		// arrange
@@ -267,10 +223,6 @@ func TestOption_Unmarshal(t *testing.T) {
 		// assert
 		require.NoError(t, err)
 		require.False(t, option.IsSome())
-		v, err := option.Unwrap()
-		require.Equal(t, []bool(nil), v)
-		require.Error(t, err)
-		require.ErrorIs(t, err, ErrUnwrapNone)
 	})
 
 	// structered data (all types)
@@ -366,14 +318,14 @@ func TestOption_Unmarshal(t *testing.T) {
 
 		// assert
 		require.NoError(t, err)
-		require.True(t, ts.FirstName.IsSome()); v1, err1 := ts.FirstName.Unwrap(); require.NoError(t, err1); require.Equal(t, "Mary", v1)
-		require.True(t, ts.Age.IsSome()); v2, err2 := ts.Age.Unwrap(); require.NoError(t, err2); require.Equal(t, 20, v2)
-		require.True(t, ts.Height.IsSome()); v3, err3 := ts.Height.Unwrap(); require.NoError(t, err3); require.Equal(t, 1.7, v3)
-		require.True(t, ts.Licensed.IsSome()); v4, err4 := ts.Licensed.Unwrap(); require.NoError(t, err4); require.Equal(t, true, v4)
-		require.True(t, ts.Pets.IsSome()); v5, err5 := ts.Pets.Unwrap(); require.NoError(t, err5); require.Equal(t, []string{"dog", "cat"}, v5)
-		require.True(t, ts.Numbers.IsSome()); v6, err6 := ts.Numbers.Unwrap(); require.NoError(t, err6); require.Equal(t, []int{1, 2, 3}, v6)
-		require.True(t, ts.Location.IsSome()); v7, err7 := ts.Location.Unwrap(); require.NoError(t, err7); require.Equal(t, []float64{1.0, 2.0, 3.0}, v7)
-		require.True(t, ts.Bools.IsSome()); v8, err8 := ts.Bools.Unwrap(); require.NoError(t, err8); require.Equal(t, []bool{true, false}, v8)
+		require.True(t, ts.FirstName.IsSome()); require.Equal(t, "Mary", ts.FirstName.Unwrap())
+		require.True(t, ts.Age.IsSome()); require.Equal(t, 20, ts.Age.Unwrap())
+		require.True(t, ts.Height.IsSome()); require.Equal(t, 1.7, ts.Height.Unwrap())
+		require.True(t, ts.Licensed.IsSome()); require.Equal(t, true, ts.Licensed.Unwrap())
+		require.True(t, ts.Pets.IsSome()); require.Equal(t, []string{"dog", "cat"}, ts.Pets.Unwrap())
+		require.True(t, ts.Numbers.IsSome()); require.Equal(t, []int{1, 2, 3}, ts.Numbers.Unwrap())
+		require.True(t, ts.Location.IsSome()); require.Equal(t, []float64{1.0, 2.0, 3.0}, ts.Location.Unwrap())
+		require.True(t, ts.Bools.IsSome()); require.Equal(t, []bool{true, false}, ts.Bools.Unwrap())
 	})
 }
 
