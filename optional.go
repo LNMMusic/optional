@@ -32,10 +32,10 @@ func (o *Option[T]) IsSome() bool {
 	return o.value != nil
 }
 // Unwrap returns a copy of the inner value of a Some.
-func (o *Option[T]) Unwrap() (t T, err error) {
+// If the Option is a None, Unwrap panics.
+func (o *Option[T]) Unwrap() (t T) {
 	if o.value == nil {
-		err = ErrUnwrapNone
-		return
+		panic("unable to unwrap None")
 	}
 	t = *o.value
 	return
