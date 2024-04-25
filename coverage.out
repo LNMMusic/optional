@@ -1,4 +1,10 @@
 mode: count
+github.com/LNMMusic/optional/nullable/nullable.go:19.28,23.2 1 8
+github.com/LNMMusic/optional/nullable/nullable.go:26.35,31.2 1 9
+github.com/LNMMusic/optional/nullable/nullable.go:36.32,38.2 1 2
+github.com/LNMMusic/optional/nullable/nullable.go:43.29,44.13 1 2
+github.com/LNMMusic/optional/nullable/nullable.go:44.13,46.3 1 1
+github.com/LNMMusic/optional/nullable/nullable.go:47.2,47.32 1 1
 github.com/LNMMusic/optional/bson_encoder.go:9.82,16.2 3 4
 github.com/LNMMusic/optional/bson_encoder.go:19.81,23.2 2 3
 github.com/LNMMusic/optional/json_encoder.go:13.60,16.2 2 32
