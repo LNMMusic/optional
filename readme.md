@@ -146,6 +146,35 @@ Please note that marshalling a `None` optional value will result in `null` in th
 var optionalNullable := optional.Some[Nullable[int]](Nullable[int]{Value: nil})
 ```
 
+#
+---
+
+# Nullable
+
+## About Nullable and Optionals
+
+In modern programming and data handling, understanding and differentiating the presence of a value from its content is crucial. This repository contains two distinct Go packages—`nullable` and `optionals`—designed to address and manipulate these aspects with clarity and efficiency in structured and semi-structured data environments.
+
+### Why Nullable?
+
+In structured data systems like SQL databases or data represented in CSV files, fields are consistently present; however, their values can explicitly be `null`. The `nullable` package provides a robust way to handle such scenarios in Go programming. It introduces a `Null[T]` generic type that encapsulates the presence and actual content of a value through a dual-state mechanism:
+
+- **Null State**: Represents the absence of a value (akin to `NULL` in databases), clearly differentiating from...
+- **Not Null State**: A valid, user-defined value of type `T`.
+
+Using `nullable`, developers can explicitly handle and differentiate between "no data" and "zero data," enhancing the robustness and clarity of data handling operations.
+
+### Importance of Optionals
+
+For semi-structured data like JSON, where fields may not be consistently present, the theory behind and implementation of `optionals` is vital. Unlike `nullable`, which deals with the nuance of value presence within statically existing fields, `optionals` tackles the dynamism of fields themselves — they can either exist or not. This is particularly relevant in programming environments dealing with dynamic types and memory management (like slices and maps in Go), where the structure is managed in heap memory and can change at runtime.
+
+### Conclusion
+
+Together, these packages offer a structured approach to data handling that aligns with the intrinsic properties of different data schemas, from rigidly structured to flexible, schema-less formats. They promote safer, more predictable code by explicitly managing the nuances of data presence and value nullability, making them indispensable for developers working across various data-intensive applications.
+
+#
+--- 
+
 ## License
 
 This package is licensed
